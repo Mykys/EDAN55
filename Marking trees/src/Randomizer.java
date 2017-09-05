@@ -22,7 +22,7 @@ public class Randomizer {
 		return new Random().nextInt(rSize);
 	}
 	
-	public int randomMethod2 (List<Integer> nbrs) {
+	public List<Integer> randomMethod2 (List<Integer> nbrs) {
 		int pickedNbr = 0;
 		for (int i = nbrs.size()-1; i > 0; i--) {
 			pickedNbr = randomMethod(nbrs.subList(0, i+1));
@@ -30,7 +30,19 @@ public class Randomizer {
 			nbrs.set(ind, nbrs.get(i));
 			nbrs.set(i, pickedNbr);
 		}
-		return pickedNbr;
+		return nbrs;
+	}
+	
+	public List<Integer> randomMethod3 (List<Integer> nodes, List<Integer> markedNodes) {
+		int i = nodes.size()-1;
+		for (int j = 0; j < markedNodes.size(); j++) {
+			int nbr = markedNodes.get(j);
+			int ind = nodes.indexOf(nbr);
+			nodes.set(ind, nodes.get(i));
+			nodes.set(i, nbr);
+			i--;
+		}
+		return nodes.subList(0, i+1);
 	}
 
 }

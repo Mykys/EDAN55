@@ -100,45 +100,57 @@ public class Tree {
 		}	
 	}
 	
-	public void check3(Node n) {
+	public List<Integer> check3(Node n) {
 		Randomizer r = new Randomizer();
-		List<Node> markedNodes = new ArrayList<Node>();
+		List<Integer> markedNodes = new ArrayList<>();
+		List<Integer> addedNodes = new ArrayList<>();
+		markedNodes.add(n.getNbr());
 		if (n.parent != null && n.sibling != null) {
 			if (n.parent.isMarked() == true && n.sibling.isMarked() == false) {
 				n.sibling.marked = true;
-				markedNodes.add(n.sibling);
-				check(n.sibling);
+				markedNodes.add(n.sibling.getNbr());
+				addedNodes = check3(n.sibling);
 			}
 			
 			if (n.parent.isMarked() == false && n.sibling.isMarked() == true) {
 				n.parent.marked = true;
-				markedNodes.add(n.parent);
-				check(n.parent);
+				markedNodes.add(n.parent.getNbr());
+				addedNodes = check3(n.parent);
+
 			}
 		}
 		
 		if (n.left != null && n.right != null) {
 			if (n.left.isMarked() == true && n.right.isMarked() == false) {
 				n.right.marked = true;
-				markedNodes.add(n.right);
-				check(n.right);
+				markedNodes.add(n.right.getNbr());
+				addedNodes = check3(n.right);
+
 			}
 			
 			if (n.left.isMarked() == false && n.right.isMarked() == true) {
 				n.left.marked = true;
-				markedNodes.add(n.left);
-				check(n.left);
+				markedNodes.add(n.left.getNbr());
+				addedNodes = check3(n.left);
+
 			}
 		}
-		Node pickedNode;
-		for (int j = 0; j < markedNodes.size(); j++) {
-			pickedNode = markedNodes.get(j);
-			int ind = list.indexOf(pickedNode);
-			Node swap = list.get(j);
-			list.set(ind, swap);
-			list.set(j, pickedNode);
-			rSize--;
+		for(int i = 0; i < addedNodes.size(); i++) {
+			if(!markedNodes.contains(addedNodes.get(i))) {
+				markedNodes.add(addedNodes.get(i));
+			}
 		}
+		return markedNodes;
+//		Node pickedNode;
+//		for (int j = 0; j < markedNodes.size(); j++) {
+//			pickedNode = markedNodes.get(j);
+//			int ind = tree.indexOf(pickedNode);
+//			
+//			Node swap = list.get(j);
+//			list.set(ind, swap);
+//			list.set(j, pickedNode);
+//			rSize--;
+//		}
 	}
 	
 	public void fill(Node n) {
@@ -146,10 +158,10 @@ public class Tree {
 		check(n);
 	}
 	
-	public void fill3(Node n) {
+	public List<Integer> fill3(Node n) {
 		n.marked = true;
 		rSize--;
-		check3(n);
+		return check3(n);
 	}
 	
 //	public void check(Node n) {
@@ -209,6 +221,7 @@ public class Tree {
 	public int run2() {
 		Randomizer rnd = new Randomizer();
 		List<Integer> nbrList = new ArrayList<>();
+		List<Integer> markedNodes = new ArrayList<>();
 		for (int i = 0; i < tree.size(); i++) {
 			nbrList.add(i+1);
 		}
@@ -216,13 +229,11 @@ public class Tree {
 		int rndNbr; 
 		int attempts = 0;
 		boolean isFull = false;
-		int i = nbrList.size();
 		while(!isFull){
-			rndNbr = rnd.randomMethod2(nbrList.subList(0, i));
-			i--;
+			nbrList = rnd.randomMethod3(nbrList, markedNodes);
+			rndNbr = rnd.randomMethod(nbrList);
 			attempts++;
-			fill(tree.get(rndNbr-1));
-			check(tree.get(rndNbr-1));
+			fill3(tree.get(rndNbr-1));
 			isFull = checkAll(tree);
 		}
 		if(isFull) {
@@ -231,5 +242,35 @@ public class Tree {
 			System.out.println("Tree is not fully marked yet.");
 		}
 		return attempts;
+	}
+	
+	public int run3() {
+		Randomizer rnd = new Randomizer();
+		List<Integer> nbrList = new ArrayList<>();
+		List<Integer> markedNodes = new ArrayList<>();
+		for (int i = 0; i < tree.size(); i++) {
+			nbrList.add(i+1);
+		}
+
+		int rndNbr; 
+		int attempts = 0;
+		boolean isFull = false;
+		rndNbr = rnd.randomMethod(nbrList);
+		attempts++;
+		while(!isFull){
+			markedNodes = fill3(tree.get(rndNbr-1));
+			nbrList = rnd.randomMethod3(nbrList, markedNodes);
+			if (nbrList.size() > 0) {
+				rndNbr = rnd.randomMethod(nbrList);
+				attempts++;
+			}
+			isFull = checkAll(tree);
+		}
+		if(isFull) {
+			System.out.println("Tree is fully marked.");
+		} else {
+			System.out.println("Tree is not fully marked yet.");
+		}
+		return attempts;	
 	}
 }
