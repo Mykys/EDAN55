@@ -25,7 +25,7 @@ public class Randomizer {
 	public int randomMethod2 (List<Integer> nbrs) {
 		int pickedNbr = 0;
 		for (int i = nbrs.size()-1; i > 0; i--) {
-			pickedNbr = randomMethod(nbrs.subList(0, i));
+			pickedNbr = randomMethod(nbrs.subList(0, i+1));
 			int ind = nbrs.indexOf(pickedNbr);
 			nbrs.set(ind, nbrs.get(i));
 			nbrs.set(i, pickedNbr);
