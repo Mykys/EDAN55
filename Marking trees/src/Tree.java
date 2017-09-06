@@ -197,7 +197,7 @@ public class Tree {
 			isFull = checkAll(tree);
 		}
 		if(isFull) {
-			System.out.println("Tree is fully marked.");
+			//System.out.println("Tree is fully marked.");
 		} else {
 			System.out.println("Tree is not fully marked yet.");
 		}
@@ -237,7 +237,7 @@ public class Tree {
 			isFull = checkAll(tree);
 		}
 		if(isFull) {
-			System.out.println("Tree is fully marked.");
+			//System.out.println("Tree is fully marked.");
 		} else {
 			System.out.println("Tree is not fully marked yet.");
 		}
@@ -267,7 +267,7 @@ public class Tree {
 			isFull = checkAll(tree);
 		}
 		if(isFull) {
-			System.out.println("Tree is fully marked.");
+			//System.out.println("Tree is fully marked.");
 		} else {
 			System.out.println("Tree is not fully marked yet.");
 		}
