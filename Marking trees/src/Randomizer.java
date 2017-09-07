@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +43,11 @@ public class Randomizer {
 			nodes.set(i, nbr);
 			i--;
 		}
+//		ArrayList<Integer> nbrList = new ArrayList<>();
+//		for(int j = 0; j < i; j++) {
+//			nbrList.add(nodes.get(j));
+//		}
+//		return nbrList;
 		return nodes.subList(0, i+1);
 	}
 

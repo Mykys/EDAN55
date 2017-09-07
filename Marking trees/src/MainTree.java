@@ -13,9 +13,9 @@ public class MainTree {
 //		
 		ArrayList<Float> nbr = new ArrayList<>();
 		float meanVal = 0;
-		float n = 10000;
+		float n = 1000;
 		for (int i = 0; i < n; i++) {
-			Tree tree = new Tree(2);
+			Tree tree = new Tree(4);
 			float attempts = tree.run3();
 			nbr.add(attempts);
 			meanVal = meanVal + attempts;

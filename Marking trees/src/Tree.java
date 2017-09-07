@@ -5,7 +5,7 @@ public class Tree {
 	
 	private List<Node> tree;
 	private int rSize;
-	private List<Node> list;
+//	private List<Node> list;
 	
 	
 	public Tree  (int height) {
@@ -15,11 +15,11 @@ public class Tree {
 			tree.add(new Node(i+1));
 		}
 		tree = connectNodes(tree);
-		list = new ArrayList<Node>();
-		for (int i = 0; i < rSize; i++) {
-			list.add(new Node(i+1));
-		}
-		list = connectNodes(list);
+//		list = new ArrayList<Node>();
+//		for (int i = 0; i < rSize; i++) {
+//			list.add(new Node(i+1));
+//		}
+//		list = connectNodes(list);
 	}
 	
 	public int nbrNodes (int height) {
@@ -226,14 +226,17 @@ public class Tree {
 			nbrList.add(i+1);
 		}
 
-		int rndNbr; 
+		int rndNbr;
+		int i = 0;
 		int attempts = 0;
 		boolean isFull = false;
+		nbrList = rnd.randomMethod2(nbrList);
 		while(!isFull){
-			nbrList = rnd.randomMethod3(nbrList, markedNodes);
-			rndNbr = rnd.randomMethod(nbrList);
+			//rndNbr = rnd.randomMethod(nbrList);
+			rndNbr = nbrList.get(i);
+			i++;
 			attempts++;
-			fill3(tree.get(rndNbr-1));
+			fill(tree.get(rndNbr-1));
 			isFull = checkAll(tree);
 		}
 		if(isFull) {
