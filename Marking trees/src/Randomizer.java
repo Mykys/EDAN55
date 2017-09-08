@@ -43,12 +43,12 @@ public class Randomizer {
 			nodes.set(i, nbr);
 			i--;
 		}
-//		ArrayList<Integer> nbrList = new ArrayList<>();
-//		for(int j = 0; j < i; j++) {
-//			nbrList.add(nodes.get(j));
-//		}
-//		return nbrList;
-		return nodes.subList(0, i+1);
+		ArrayList<Integer> nbrList = new ArrayList<>();
+		for(int j = 0; j < i+1; j++) {
+			nbrList.add(nodes.get(j));
+		}
+		return nbrList;
+//		return nodes.subList(0, i+1);
 	}
 
 }
