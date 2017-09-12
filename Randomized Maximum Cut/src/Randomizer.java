@@ -1,20 +1,58 @@
-import java.util.List;
+import java.util.HashMap;
 
 public class Randomizer {
 
-	private List<Node> list;
+	private HashMap<Integer, Node> map;
 
-	public Randomizer(List<Node> List) {
-		list = List;
+	public Randomizer(HashMap<Integer, Node> map) {
+		this.map = map;
 	}
-										//List is the list with all nodes we create when initiating program
-	public List<Node> swapper(List<Node> List) {		//Maybe move this method to main?
-		for (Node N : List) {							//Also fix return type
-			if(addedN.getCut() > current.getCut()) {	//Might need a new class for whole graph? 
-				subsetA.add(N);	//subsetA is a list		//At least need method for calculating getCut()
+
+	public int RandomR() {
+		for (int i = 1; i <= map.size(); i++) {
+			Node n = map.get(i);
+			n.randomize();
+		}
+		return totalMaxCut();
+	}
+
+	public int RandomS() {
+		boolean stat = true;
+		int maxCut = 0;
+		int prevMaxCut = 0;
+		while (stat) {
+			for (int i = 1; i <= map.size(); i++) {
+				Node n = map.get(i);
+				n.changeVal();
+				int currMaxCut = totalMaxCut();
+
+				if (currMaxCut > prevMaxCut) {
+					prevMaxCut = currMaxCut;
+				} else {
+					n.changeVal();
+				}
+			}
+			if (prevMaxCut > maxCut) {
+				maxCut = prevMaxCut;
+			} else {
+				stat = false;
 			}
 		}
-		return null;
+		return maxCut;
 	}
 
+	public int RandomRS() {
+		RandomR();
+		return RandomS();
+	}
+
+	public int totalMaxCut() {
+		int total = 0;
+		for (int i = 1; i <= map.size(); i++) {
+			Node n = map.get(i);
+			int count = n.maxCut(n.getEdges());
+			total = total + count;
+		}
+		return total;
+	}
 }
