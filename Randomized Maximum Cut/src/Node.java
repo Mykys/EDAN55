@@ -1,21 +1,20 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Node {
 	private int val;
-	List<Edge> edges = new ArrayList<>();
-	//Lägg till t.ex. hashmap för att inte skapa samma objekt flera ggr
+	private List<Edge> edges = new ArrayList<>();
 	
 	public  Node (int val) {
 		this.val = val;
 	}
 	
-	public Node randomize() {
+	public void randomize() {
 		Random rnd = new Random();
 		int rndVal = rnd.nextInt(2);
 		val = rndVal;
-		return this;
 	}
 	
 	public int getNodeVal() {
@@ -24,6 +23,10 @@ public class Node {
 	
 	public void add(Edge e) {
 		edges.add(e);
+	}
+	
+	public List<Edge> getEdges() {
+		return edges;
 	}
 	
 //	public List<Node> sortA(List<Node> nodeList, List<Node> listA) {
@@ -56,6 +59,30 @@ public class Node {
 		return count;
 	}
 	
+//	public int maxCut(HashMap<Integer, Node> nodeList) {
+//		int count = 0;
+//		List<Edge> e;
+//		for (int i = 0; i < nodeList.size(); i++) {
+//			e = nodeList.get(i).edges;
+//			for (int j = 0; j < e.size(); j++) {
+//				int fromVal = e.get(j).getFrom().getNodeVal();
+//				int toVal = e.get(j).getTo().getNodeVal();
+//				if (fromVal == 0 && toVal == 1 || fromVal == 1 && toVal == 0) {
+//					count = count + e.get(j).getWeight();
+//				}
+//			}	
+//		}
+//		return count;
+//	}
+//	
+//	public int run(List<Edge> e) {
+//		for (int i = 0; i < e.size(); i++) {
+//			nodeList.get(i).randomize();
+//		}
+//		return maxCut(nodeList);
+		
+	}
+	
 //	public int maxCut (List<Node> listA, List<Node> listB) {
 //		int count = 0;
 //		for (Node n : listA) {
@@ -67,4 +94,4 @@ public class Node {
 //		}
 //		return count;
 //	}
-}
+
