@@ -1,7 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
 
@@ -9,6 +12,7 @@ public class Main {
 
 		HashMap<Integer, Node> nodeMap = new HashMap<Integer, Node>();
 		String filename = "C:/Users/Myky/Documents/EDAN55/Randomized Maximum Cut/matching_1000.txt";
+		//String filename = "C:/Users/Myky/Documents/EDAN55/Randomized Maximum Cut/pw09_100.9.txt";
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(filename));
@@ -41,12 +45,24 @@ public class Main {
 			e1.printStackTrace();
 		}
 
-		int maxCut;
-		Randomizer rnd = new Randomizer(nodeMap);
-		// maxCut = rnd.RandomR();
-		 maxCut = rnd.RandomS();
-		//maxCut = rnd.RandomRS();
-		System.out.println(maxCut);
+		//int maxCut;
+		int t = 100;
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < t; i++) {
+			Randomizer rnd = new Randomizer(nodeMap);
+			//int maxCut = rnd.RandomR();
+			//int maxCut = rnd.RandomS();
+			int maxCut = rnd.RandomRS();
+			list.add(maxCut);
+			//System.out.println(maxCut);
+		}
+		int max = Collections.max(list);
+		int sum = 0;
+		for (int mc : list) {
+			sum = sum + mc;
+		}
+		float avg = sum/list.size();
+		System.out.println("The maximum cut of this method is " + max + " and the average cut is " + avg);
 
 	}
 }
