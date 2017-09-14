@@ -48,7 +48,7 @@ public class Main {
 		}
 
 		//int maxCut;
-		int t = 100;
+		int t = 10;
 		List<Integer> list = new ArrayList<>();
 		for (int i = 0; i < t; i++) {
 			Randomizer rnd = new Randomizer(nodeMap);
@@ -56,6 +56,7 @@ public class Main {
 			//int maxCut = rnd.RandomS();
 			int maxCut = rnd.RandomRS();
 			list.add(maxCut);
+			rnd.printSwap();
 			rnd.reset();
 			//System.out.println(maxCut);
 		}

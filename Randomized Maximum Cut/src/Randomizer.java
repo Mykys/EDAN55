@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class Randomizer {
 
 	private HashMap<Integer, Node> map;
+	public static int asdf = 0;
 
 	public Randomizer(HashMap<Integer, Node> map) {
 		this.map = map;
@@ -28,6 +29,7 @@ public class Randomizer {
 
 				if (currMaxCut > prevMaxCut) {
 					prevMaxCut = currMaxCut;
+					asdf++;
 				} else {
 					n.changeVal();
 				}
@@ -59,7 +61,12 @@ public class Randomizer {
 	public void reset() {
 		for(int i = 1; i <= map.size(); i++) {
 			map.get(i).reset();
+			asdf=0;
 		}
 		
+	}
+	
+	public void printSwap() {
+		System.out.println(asdf);
 	}
 }
