@@ -3,11 +3,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Node {
-	private int val;
+	private int nbr;
 	private List<Edge> edges = new ArrayList<>();
+	private int val = 0;
 
-	public Node(int val) {
-		this.val = val;
+	public Node(int nbr) {
+		this.nbr = nbr;
 	}
 
 	public void randomize() {
@@ -21,7 +22,7 @@ public class Node {
 	}
 
 	public void setNodeVal(int nbr) {
-		val = nbr;
+		this.nbr = nbr;
 	}
 
 	public void add(Edge e) {
