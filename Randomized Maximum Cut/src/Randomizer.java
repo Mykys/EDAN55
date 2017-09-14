@@ -55,4 +55,11 @@ public class Randomizer {
 		}
 		return total;
 	}
+
+	public void reset() {
+		for(int i = 1; i <= map.size(); i++) {
+			map.get(i).reset();
+		}
+		
+	}
 }

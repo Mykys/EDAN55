@@ -52,4 +52,9 @@ public class Node {
 		}
 		return count;
 	}
+
+	public void reset() {
+		val = 0;
+		
+	}
 }

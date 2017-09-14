@@ -11,8 +11,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		HashMap<Integer, Node> nodeMap = new HashMap<Integer, Node>();
-		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Randomized Maximum Cut/matching_1000.txt";
-		//String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Randomized Maximum Cut/pw09_100.9.txt";
+		//String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Randomized Maximum Cut/matching_1000.txt";
+		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Randomized Maximum Cut/pw09_100.9.txt";
 		//String filename = "C:/Users/Myky/Documents/EDAN55/Randomized Maximum Cut/matching_1000.txt";
 		//String filename = "C:/Users/Myky/Documents/EDAN55/Randomized Maximum Cut/pw09_100.9.txt";
 		BufferedReader br;
@@ -53,13 +53,14 @@ public class Main {
 		for (int i = 0; i < t; i++) {
 			Randomizer rnd = new Randomizer(nodeMap);
 			//int maxCut = rnd.RandomR();
-			int maxCut = rnd.RandomS();
-			//int maxCut = rnd.RandomRS();
+			//int maxCut = rnd.RandomS();
+			int maxCut = rnd.RandomRS();
 			list.add(maxCut);
+			rnd.reset();
 			//System.out.println(maxCut);
 		}
 		int max = Collections.max(list);
-		int sum = 0;
+		float sum = 0;
 		for (int mc : list) {
 			sum = sum + mc;
 		}
