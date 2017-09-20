@@ -8,7 +8,7 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g40.txt";
+		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g30.txt";
 		int[][] adjMatrix = readFile(filename); // also number of nodes, given
 												// as length
 		int n = adjMatrix.length;
@@ -27,14 +27,16 @@ public class Main {
 		if (adjMatrix == null) {
 			return 0;
 		}
+		//Check for nodes with degree 0
 		int MIS = 0;
-		ArrayList<Integer> removeList = removeList(adjMatrix, 0);
+		ArrayList<Integer> removeList = removeNode(adjMatrix, 0);
 		if (removeList.size() > 0) {
 			adjMatrix = subMatrix(adjMatrix, removeList);
 			MIS += removeList.size();
 		}
 		removeList.clear();
-		removeList = removeList(adjMatrix, 1);
+		//Check for nodes with degree 1
+		removeList = removeNode(adjMatrix, 1);
 		ArrayList<Integer> removeList2 = algR1(adjMatrix, removeList);
 		if (removeList.size() > 0) {
 			adjMatrix = subMatrix(adjMatrix, removeList2);
@@ -52,13 +54,11 @@ public class Main {
 			int alt2 = algR0(a2Matrix);
 			int altMax = Math.max(alt1, alt2);
 			MIS += altMax;
-			return MIS;
-		} else {
-			return MIS;
 		}
+		return MIS;
 	}
 
-	private static ArrayList<Integer> removeList(int[][] adjMatrix, int deg) {
+	private static ArrayList<Integer> removeNode(int[][] adjMatrix, int deg) {
 		ArrayList<Integer> removeList = new ArrayList<>();
 		for (int i = 0; i < adjMatrix.length; i++) {
 			int degree = 0;
@@ -164,6 +164,7 @@ public class Main {
 					adjMatrix[i][j] = k;
 				}
 			}
+			br.close();
 			return adjMatrix;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
