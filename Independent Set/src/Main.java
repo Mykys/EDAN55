@@ -8,8 +8,9 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g30.txt";
+		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g15.txt";
 		int[][] adjMatrix = readFile(filename);
+		Counter counter = new Counter(0);
 		int MIS = run(adjMatrix);
 		print(MIS);
 
@@ -25,19 +26,22 @@ public class Main {
 		if (adjMatrix == null) {
 			return 0;
 		}
-		// Check for nodes with degree 0
+		ArrayList<Integer> removeList = new ArrayList<>();
 		int MIS = 0;
-		ArrayList<Integer> removeList = findNode(adjMatrix, 0);
-		if (removeList.size() > 0) {
-			adjMatrix = subMatrix(adjMatrix, removeList);
-			MIS += removeList.size();
-		}
 		// Check for nodes with degree 1
 		removeList.clear();
 		removeList = findNode(adjMatrix, 1);
 		if (removeList.size() > 0) {
 			ArrayList<Integer> removeList2 = R1AddOn(adjMatrix, removeList); //Find neighbors to removeList
 			adjMatrix = subMatrix(adjMatrix, removeList2);
+			MIS += removeList.size();
+		}
+		// Check for nodes with degree 0
+//		int MIS = 0;
+//		ArrayList<Integer> 
+		removeList = findNode(adjMatrix, 0);
+		if (removeList.size() > 0) {
+			adjMatrix = subMatrix(adjMatrix, removeList);
 			MIS += removeList.size();
 		}
 
@@ -66,7 +70,9 @@ public class Main {
 				}
 			}
 			if (degree == deg) {
+				if(!removeList.contains(i)) {
 					removeList.add(i);
+				}
 			}
 		}
 		return removeList;
@@ -127,7 +133,7 @@ public class Main {
 		for (int i = 0; i < k; i++) {
 			for (int j = 0; j < k; j++) {
 				if (removeList.contains(i) || removeList.contains(j)) {
-					// skip this case
+					// skip/do nothing if this case is true
 				} else {
 					if (a < sub) {
 						subMatrix[a][b] = adjMatrix[i][j];
