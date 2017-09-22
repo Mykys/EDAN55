@@ -9,9 +9,8 @@ import java.util.List;
 public class Main3 {
 
 	public static void main(String[] args) {
-		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g110.txt";
-		// String filename = "C:/Users/Myky/Documents/EDAN55/Independent
-		// Set/g100.txt";
+		//String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g110.txt";
+		String filename = "C:/Users/Myky/Documents/EDAN55/Independent Set/g4.txt";
 		int[][] adjMatrix = readFile(filename);
 		Counter counter = new Counter(0);
 		int MIS = run(adjMatrix, counter);
@@ -41,30 +40,10 @@ public class Main3 {
 
 		// Isolated nodes
 		int MIS = 0;
-		int nodeNbr = findNode(adjMatrix, ignoreList, 0);
-		while (nodeNbr != -1) {
-			MIS++;
-			ignoreList.add(nodeNbr);
-			nodeNbr = findNode(adjMatrix, ignoreList, 0);
-		}
-
-		// Nodes with degree 1
-		ArrayList<Integer> neighbours;
-		nodeNbr = findNode(adjMatrix, ignoreList, 1);
-		while (nodeNbr != -1) {
-			MIS++;
-			neighbours = findNeighbours(adjMatrix, ignoreList, nodeNbr);
-			for (Integer i : neighbours) {
-				if (!ignoreList.contains(i)) {
-					ignoreList.add(i);
-				}
-			}
-			// ignoreList.add(nodeNbr);
-			nodeNbr = findNode(adjMatrix, ignoreList, 1);
-		}
 		
 		// Nodes with degree 2
-		nodeNbr = findNode(adjMatrix, ignoreList, 2);
+		ArrayList<Integer> neighbours;
+		int nodeNbr = findNode(adjMatrix, ignoreList, 2);
 		while (nodeNbr != -1) {
 			MIS++;
 			neighbours = findNeighbours(adjMatrix, ignoreList, nodeNbr);
@@ -86,6 +65,27 @@ public class Main3 {
 				ignoreList.add(a);
 				ignoreList.add(b);
 				nodeNbr = findNode(adjMatrix, ignoreList, 2);
+		}
+		
+		// Nodes with degree 1
+		nodeNbr = findNode(adjMatrix, ignoreList, 1);
+		while (nodeNbr != -1) {
+			MIS++;
+			neighbours = findNeighbours(adjMatrix, ignoreList, nodeNbr);
+			for (Integer i : neighbours) {
+				if (!ignoreList.contains(i)) {
+					ignoreList.add(i);
+				}
+			}
+			// ignoreList.add(nodeNbr);
+			nodeNbr = findNode(adjMatrix, ignoreList, 1);
+		}
+		
+		nodeNbr = findNode(adjMatrix, ignoreList, 0);
+		while (nodeNbr != -1) {
+			MIS++;
+			ignoreList.add(nodeNbr);
+			nodeNbr = findNode(adjMatrix, ignoreList, 0);
 		}
 		
 
