@@ -9,8 +9,8 @@ import java.util.List;
 public class Main3 {
 
 	public static void main(String[] args) {
-		//String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g110.txt";
-		String filename = "C:/Users/Myky/Documents/EDAN55/Independent Set/g4.txt";
+		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/Independent Set/g120.txt";
+		//String filename = "C:/Users/Myky/Documents/EDAN55/Independent Set/g4.txt";
 		int[][] adjMatrix = readFile(filename);
 		Counter counter = new Counter(0);
 		int MIS = run(adjMatrix, counter);
