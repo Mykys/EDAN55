@@ -2,10 +2,54 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Main {
 
 	public static void main(String[] args) {
+		String filename = "C:/Users/Myky/Documents/EDAN55/FedUPS/toy.txt";
+		int N = 10000;
+		MatrixStorer ms = parseCode(filename);
+		
+		//Markov
+		ms.printA();
+		System.out.println("\n");
+		ms.printB();
+		System.out.println("\n");
+		ms.printT();
+		
+		//Monte-Carlo
+		List<Double> FList = new ArrayList<>();
+		List<Double> PList = new ArrayList<>();
+		double totWeightF = 0;
+		double totWeightP = 0;
+		if (endReachable(ms.getF(), ms.getH(), ms.getP(), ms.getA())) {
+			
+			for (int i = 0; i < N; i++) {
+				totWeightF = MonteCarlo(ms.getH(), ms.getF(), ms.getA(), ms.getT());
+				totWeightP = MonteCarlo(ms.getH(), ms.getP(), ms.getA(), ms.getT());
+				FList.add(totWeightF);
+				PList.add(totWeightP);
+			}
+		}
+		
+		double sumF = 0;
+		for (Double d : FList) {
+			sumF = sumF + d;
+		}
+		
+		double sumP = 0;
+		for (Double d : PList) {
+			sumP = sumP + d;
+		}
+		
+		double avgF = sumF/N;
+		double avgP = sumP/N;
+		
+		System.out.println("Average delivery time for F and P are: " + avgF + " & " + avgP);
+		
 	//markov
 		//parse code
 		//create A matrix and T matrix while parsing
@@ -19,7 +63,7 @@ public class Main {
 
 	}
 	
-	public MatrixStorer parseCode(String filename) {
+	public static MatrixStorer parseCode(String filename) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filename));
 			MatrixStorer ms = new MatrixStorer();
@@ -29,24 +73,35 @@ public class Main {
 			int H = Integer.parseInt(info[2]);
 			int F = Integer.parseInt(info[3]);
 			int P = Integer.parseInt(info[4]);
-			int[][] A = new int[N][N];
-			int[][] T = new int[N][N];
-			int[] b = new int[N];
-			int u, v, t, p1, p2;
+			double[][] A = new double[N][N];
+			double[][] T = new double[N][N];
+			double[] b = new double[N];
+			
+			//Fill with -1, problems will appear when calculating
+			for (int i = 0; i < A.length; i++) {
+				b[i] = -1;
+				for (int j = 0; j < A.length; j++) {
+					A[i][j] = -1;
+					T[i][j] = -1;
+				}
+			}
+			
+			int u, v, t;
+			double p1, p2;
 			for(int i = 0; i < M; i++) {
 				info = br.readLine().trim().split(" ");
 				u = Integer.parseInt(info[0]);
 				v = Integer.parseInt(info[1]);
 				t = Integer.parseInt(info[2]);
-				p1 = Integer.parseInt(info[3]);
-				p2 = Integer.parseInt(info[4]);
+				p1 = Double.parseDouble(info[3]);
+				p2 = Double.parseDouble(info[4]);
 				A[u][v] = p1;
 				A[v][u] = p2;
 				T[u][v] = t;
 				T[v][u] = t;
 			}
 			for (int i = 0; i < N; i++) {
-				int sum = 0;
+				double sum = 0;
 				for (int j = 0; j < N; j++) {
 					sum += A[i][j]*T[j][i];
 				}
@@ -55,6 +110,9 @@ public class Main {
 			ms.setA(A);
 			ms.setT(T);
 			ms.setB(b);
+			ms.setH(H);
+			ms.setF(F);
+			ms.setP(P);
 			return ms;
 			
 		} catch (FileNotFoundException e) {
@@ -66,6 +124,71 @@ public class Main {
 		}
 		System.out.println("Error in parsing?");
 		return null;
+	}
+	
+	public static double MonteCarlo (int startRow, int homeRow, double A[][], double T[][]) {
+		List<Double> weight = new ArrayList<>();
+		Random rnd = new Random();
+		
+		while(startRow != homeRow) {
+			double rndNbr = rnd.nextDouble();
+			double sum = 0;
+			int i = 0;
+			while (rndNbr > sum) {
+				if (A[startRow][i] != -1) {
+					sum = sum + A[startRow][i];
+				}
+				
+				if (i < (A.length - 1)) {
+					i++;
+				} else {
+					break;
+				}	
+			}
+			weight.add(T[startRow][i]);
+			startRow = i;
+		}
+		double totalWeight = 0;
+		for (Double d : weight) {
+			totalWeight = totalWeight + d;
+		}
+		
+		return totalWeight;
+	}
+	
+	public static boolean endReachable (int home, int F, int P, double A[][]) {
+		List<Integer> connected = new ArrayList<>();
+		List<Integer> temp = new ArrayList<>();
+		connected.add(home);
+		int currSize = 1;
+		int preSize = 0;
+		
+		for (int i = 0; i < A.length; i++) {
+			if (A[i][home] != -1) {
+				connected.add(i);
+			}
+			preSize = currSize;
+			currSize = connected.size();
+		}
+		
+		while (currSize > preSize) {
+			if (connected.contains(F) && connected.contains(P)) {
+				return true;
+			}
+			
+			for (Integer i : connected) {
+				for (int j = 0; j < A.length; j++) {
+					if (A[j][i] != -1 && !connected.contains(j)) {
+						temp.add(j);
+					}
+				}
+			}
+			connected.addAll(temp);
+			preSize = currSize;
+			currSize = connected.size();
+		}
+		
+		return false;
 	}
 
 }

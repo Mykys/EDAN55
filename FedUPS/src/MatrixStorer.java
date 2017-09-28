@@ -1,36 +1,64 @@
 
 public class MatrixStorer {
 	
-	private int[][] A;
-	private int[][] T;
-	private int[] B;
+	private double[][] A;
+	private double[][] T; //Risk för fel vid parsing
+	private double[] B;
+	private int H;
+	private int F;
+	private int P;
 	
-	public void setA(int[][] A) {
+	public void setA(double[][] A) {
 		this.A = A;
 	}
 	
-	public void setT(int[][] T) {
+	public void setT(double[][] T) {
 		this.T = T;
 	}
 	
-	public void setB(int[] B) {
+	public void setB(double[] B) {
 		this.B = B;
 	}
 	
-	public int[][] getA() {
+	public void setH(int H) {
+		this.H = H;
+	}
+	
+	public void setF(int F) {
+		this.F = F;
+	}
+	
+	public void setP(int P) {
+		this.P = P;
+	}
+	
+	public double[][] getA() {
 		return A;
 	}
 	
-	public int[][] getT() {
+	public double[][] getT() {
 		return T;
 	}
 	
-	public int[] getB() {
+	public double[] getB() {
 		return B;
 	}
 	
-	public int[][] getAI() {
-		int[][] AI = new int[A.length][A.length];
+	
+	public int getH() {
+		return H;
+	}
+	
+	public int getF() {
+		return F;
+	}
+	
+	public int getP() {
+		return P;
+	}
+	
+	public double[][] getAI() {
+		double[][] AI = new double[A.length][A.length];
 		for (int i = 0; i < A.length; i++) {
 			for (int j = 0; i < A.length; j++) {
 				AI[i][j] = A[i][j];
@@ -46,13 +74,14 @@ public class MatrixStorer {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < A.length; i++) {
-			for (int j = 0; i < A.length; j++) {
+			for (int j = 0; j < A.length; j++) {
 				sb.append(A[i][j]);
 				sb.append(" ");
 			}
-			sb.append("\n");
-			sb.append(" ");
-			if(i==A.length) {
+			if (i < (A.length - 1)) {
+				sb.append("\n");
+				sb.append(" ");
+			} else {
 				sb.append("]");
 			}
 		}
@@ -64,13 +93,14 @@ public class MatrixStorer {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
 		for (int i = 0; i < T.length; i++) {
-			for (int j = 0; i < T.length; j++) {
+			for (int j = 0; j < T.length; j++) {
 				sb.append(T[i][j]);
 				sb.append(" ");
 			}
-			sb.append("\n");
-			sb.append(" ");
-			if(i==T.length) {
+			if (i < (T.length - 1)) {
+				sb.append("\n");
+				sb.append(" ");
+			} else {
 				sb.append("]");
 			}
 		}
@@ -86,6 +116,8 @@ public class MatrixStorer {
 			sb.append(" ");
 		}
 		sb.append("]");
+		
+		String Bmatr = sb.toString();
+		System.out.println(Bmatr);
 	}
-	
 }
