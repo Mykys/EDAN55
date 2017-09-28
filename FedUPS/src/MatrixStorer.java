@@ -60,7 +60,7 @@ public class MatrixStorer {
 	public double[][] getAI() {
 		double[][] AI = new double[A.length][A.length];
 		for (int i = 0; i < A.length; i++) {
-			for (int j = 0; i < A.length; j++) {
+			for (int j = 0; j < A.length; j++) {
 				AI[i][j] = A[i][j];
 				if(i==j) {
 					AI[i][j]--;

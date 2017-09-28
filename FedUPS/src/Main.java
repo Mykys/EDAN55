@@ -9,7 +9,8 @@ import java.util.Random;
 public class Main {
 
 	public static void main(String[] args) {
-		String filename = "C:/Users/Myky/Documents/EDAN55/FedUPS/toy.txt";
+//		String filename = "C:/Users/Myky/Documents/EDAN55/FedUPS/toy.txt";
+		String filename = "C:/Users/Shintai/Desktop/Skola/edan55/FedUPS/toy.txt";
 		int N = 10000;
 		MatrixStorer ms = parseCode(filename);
 		
@@ -19,21 +20,32 @@ public class Main {
 		ms.printB();
 		System.out.println("\n");
 		ms.printT();
+		double[] sol = GaussianElimination.lsolve(ms.getAI(), ms.getB());
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < sol.length; i++) {
+			sb.append(sol[i]);
+			sb.append(" ");
+		}
+		sb.append("]");
+		
+		String Bmatr = sb.toString();
+		System.out.println(Bmatr);
 		
 		//Monte-Carlo
 		List<Double> FList = new ArrayList<>();
 		List<Double> PList = new ArrayList<>();
 		double totWeightF = 0;
 		double totWeightP = 0;
-		if (endReachable(ms.getF(), ms.getH(), ms.getP(), ms.getA())) {
+//		if (endReachable(ms.getF(), ms.getH(), ms.getP(), ms.getA())) {
 			
 			for (int i = 0; i < N; i++) {
-				totWeightF = MonteCarlo(ms.getH(), ms.getF(), ms.getA(), ms.getT());
-				totWeightP = MonteCarlo(ms.getH(), ms.getP(), ms.getA(), ms.getT());
+				totWeightF = MonteCarlo(ms.getF(), ms.getH(), ms.getA(), ms.getT());
+				totWeightP = MonteCarlo(ms.getP(), ms.getH(), ms.getA(), ms.getT());
 				FList.add(totWeightF);
 				PList.add(totWeightP);
 			}
-		}
+//		}
 		
 		double sumF = 0;
 		for (Double d : FList) {
@@ -78,13 +90,13 @@ public class Main {
 			double[] b = new double[N];
 			
 			//Fill with -1, problems will appear when calculating
-			for (int i = 0; i < A.length; i++) {
-				b[i] = -1;
-				for (int j = 0; j < A.length; j++) {
-					A[i][j] = -1;
-					T[i][j] = -1;
-				}
-			}
+//			for (int i = 0; i < A.length; i++) {
+//				b[i] = -1;
+//				for (int j = 0; j < A.length; j++) {
+//					A[i][j] = -1;
+//					T[i][j] = -1;
+//				}
+//			}
 			
 			int u, v, t;
 			double p1, p2;
@@ -134,16 +146,19 @@ public class Main {
 			double rndNbr = rnd.nextDouble();
 			double sum = 0;
 			int i = 0;
+			if (A[startRow][i] != 0) {
+				sum = sum + A[startRow][i];
+			}
 			while (rndNbr > sum) {
-				if (A[startRow][i] != -1) {
-					sum = sum + A[startRow][i];
-				}
-				
 				if (i < (A.length - 1)) {
 					i++;
 				} else {
 					break;
 				}	
+				if (A[startRow][i] != 0) {
+					sum = sum + A[startRow][i];
+				}
+				
 			}
 			weight.add(T[startRow][i]);
 			startRow = i;
@@ -164,7 +179,7 @@ public class Main {
 		int preSize = 0;
 		
 		for (int i = 0; i < A.length; i++) {
-			if (A[i][home] != -1) {
+			if (A[i][home] != 0) {
 				connected.add(i);
 			}
 			preSize = currSize;
@@ -178,7 +193,7 @@ public class Main {
 			
 			for (Integer i : connected) {
 				for (int j = 0; j < A.length; j++) {
-					if (A[j][i] != -1 && !connected.contains(j)) {
+					if (A[j][i] != 0 && !connected.contains(j)) {
 						temp.add(j);
 					}
 				}
