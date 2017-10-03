@@ -89,6 +89,8 @@ public class Parser {
 				int j = toInt(line[1]);
 				adjMatrix[i][j] = 1;
 				adjMatrix[j][i] = 1;
+				TD.getBag(i).addNeighbour(TD.getBag(j));
+				TD.getBag(j).addNeighbour(TD.getBag(i));
 			}
 			TD.setAdjMatrix(adjMatrix);
 			br.close();

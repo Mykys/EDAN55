@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 
 public class TreeD {
 	
@@ -11,6 +12,15 @@ public class TreeD {
 	
 	public void setAdjMatrix(int[][] adjMatrix) {
 		this.adjMatrix = adjMatrix;
+	}
+
+	public int setRandomRoot() {
+		Random r = new Random();
+		return 1+r.nextInt(bagList.size());
+	}
+	
+	public Bag getBag(int bagNbr) {
+		return bagList.get(bagNbr);
 	}
 	
 }

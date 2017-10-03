@@ -17,6 +17,8 @@ public class MainTW {
 		Parser p = new Parser();
 		Graph g = p.readGraph(args[0]);
 		TreeD TD = p.readTree(args[1], g);
+		int root = TD.setRandomRoot();
+		
 	}
 	
 

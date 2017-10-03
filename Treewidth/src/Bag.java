@@ -7,20 +7,35 @@ public class Bag {
 	List<Integer> umax;
 	int MIS;
 	int bagNbr = 0;
+	List<Bag> neighbours;
 	
 	public Bag() {
 		nodes = new ArrayList<>();
 		umax = new ArrayList<>();
+		neighbours = new ArrayList<>();
 	}
 	
 	public Bag(List<Integer> nodes, int bagNbr) {
 		this.nodes = nodes;
 		umax = new ArrayList<>();
 		this.bagNbr = bagNbr;
+		neighbours = new ArrayList<>();
 	}
 	
 	public int getBagNbr() {
 		return bagNbr;
+	}
+	
+	public List<Integer> getNodes() {
+		return nodes;
+	}
+	
+	public void addNeighbour(Bag b) { //Maybe want to change "int i" to "Bag b"
+		neighbours.add(b);
+	}
+	
+	public List<Bag> getNeighbours() {
+		return neighbours;
 	}
 	
 	public List<Integer> MISList(int[][] AdjMatrix, List<Integer> nodes) {

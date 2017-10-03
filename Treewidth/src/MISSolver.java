@@ -3,7 +3,7 @@ import java.util.List;
 
 public class MISSolver {
 	
-	private List<Integer> algRecursive (int[][] bagMatrix, List<Integer> ignoreList) {
+	public List<Integer> algRecursive (int[][] bagMatrix, List<Integer> ignoreList) {
 		List<Integer> nodeList = new ArrayList<>();
 		
 		// Empty
