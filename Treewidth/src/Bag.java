@@ -51,7 +51,7 @@ public class Bag {
 			int currNode = nodes.get(i);
 			for (int j = 0; i < size; j++) {
 				int node = nodes.get(j);
-				if (g.getElement(i, j) == 1) {
+				if (g.getElement(currNode, node) == 1) {
 					bagMatrix[i][j] = 1;
 					bagMatrix[j][i] = 1;
 				}
@@ -59,6 +59,14 @@ public class Bag {
 		}
 		
 		return bagMatrix;
+	}
+	
+	public int bagSize() {
+		return nodes.size();
+	}
+	
+	public List<Integer> getbagList() {
+		return nodes;
 	}
 
 }
