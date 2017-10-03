@@ -83,6 +83,25 @@ public class MatrixStorer {
 		return AI;
 	}
 	
+	public void printAI(double[][] AI) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		for (int i = 0; i < AI.length; i++) {
+			for (int j = 0; j < AI.length; j++) {
+				sb.append(AI[i][j]);
+				sb.append(" ");
+			}
+			if (i < (AI.length - 1)) {
+				sb.append("\n");
+				sb.append(" ");
+			} else {
+				sb.append("]");
+			}
+		}
+		String Amatr = sb.toString();
+		System.out.println(Amatr);
+	}
+	
 	public void printA() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");

@@ -12,21 +12,21 @@ public class Main {
 		// String filename = "C:/Users/Myky/Documents/EDAN55/FedUPS/toy.txt";
 		int tries = 10000;
 		String filename;
-		filename = "small";
-		Main.sovleFile(filename, tries);
-		System.out.println("\n");
-		filename = "toy";
-		Main.sovleFile(filename, tries);
-		System.out.println("\n");
-		filename = "rnd1";
-		Main.sovleFile(filename, tries);
-		System.out.println("\n");
-		filename = "rnd2";
-		Main.sovleFile(filename, tries);
-		System.out.println("\n");
-		filename = "rnd3";
-		Main.sovleFile(filename, tries);
-		System.out.println("\n");
+//		filename = "small";
+//		Main.sovleFile(filename, tries);
+//		System.out.println("\n");
+//		filename = "toy";
+//		Main.sovleFile(filename, tries);
+//		System.out.println("\n");
+//		filename = "rnd1";
+//		Main.sovleFile(filename, tries);
+//		System.out.println("\n");
+//		filename = "rnd2";
+//		Main.sovleFile(filename, tries);
+//		System.out.println("\n");
+//		filename = "rnd3";
+//		Main.sovleFile(filename, tries);
+//		System.out.println("\n");
 		filename = "strange2";
 		Main.sovleFile(filename, tries);
 		System.out.println("\n");
@@ -97,12 +97,12 @@ public class Main {
 
 		
 		// Markov
-		// System.out.println("\n");
-		// ms.printA();
-		// System.out.println("\n");
-		// ms.printB();
-		// System.out.println("\n");
-		// ms.printT();
+		 System.out.println("\n");
+		 ms.printAI(ms.getAI());
+		 System.out.println("\n");
+		 ms.printB();
+		 System.out.println("\n");
+		 ms.printT();
 		int ftemp = f;
 		int ptemp = p;
 		boolean fExist = tryPoints.contains(ftemp);

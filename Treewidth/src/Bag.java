@@ -6,10 +6,21 @@ public class Bag {
 	List<Integer> nodes;
 	List<Integer> umax;
 	int MIS;
+	int bagNbr = 0;
 	
-	public  Bag() {
+	public Bag() {
 		nodes = new ArrayList<>();
 		umax = new ArrayList<>();
+	}
+	
+	public Bag(List<Integer> nodes, int bagNbr) {
+		this.nodes = nodes;
+		umax = new ArrayList<>();
+		this.bagNbr = bagNbr;
+	}
+	
+	public int getBagNbr() {
+		return bagNbr;
 	}
 	
 	public List<Integer> MISList(int[][] AdjMatrix, List<Integer> nodes) {
