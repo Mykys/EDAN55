@@ -23,6 +23,14 @@ public class UListCreator {
 		return UList;
 	}
 	
+	public List<List<Integer>> calcUNodes(Bag b, List<String> calcUList) {
+		List<List<Integer>> UNodes = new ArrayList<>();
+		for (String s : calcUList) {
+			UNodes.add(b.getNodeNbr(s));
+		}
+		return UNodes;
+	}
+	
 	private String createString(int i, Bag b) {
 		StringBuilder sb = new StringBuilder();
 		int remainder = i;
