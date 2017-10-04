@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class WorseRecSolv {
@@ -49,14 +48,6 @@ public class WorseRecSolv {
 			}
 		}
 		return parentUList; //this gives all nodes in each parentU, not discerning between nodes originally from parentU or childU
-	}
-	
-	private List<Integer> localSolution(Bag b) {
-		MISSolver ms = new MISSolver();
-		int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
-		List<Integer> ignoreList = new ArrayList<Integer>();
-		List<Integer> localSolution = ms.algRecursive(bagMatrix, ignoreList);
-		return localSolution;
 	}
 	
 }
