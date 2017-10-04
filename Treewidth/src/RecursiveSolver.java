@@ -58,27 +58,29 @@ public class RecursiveSolver {
 		List<Bag> neighbours = root.getNeighbours();
 		UListCreator ulc = new UListCreator(g);
 //		List<U> parent_sets = root.getUList();
-		List<String> parent_sets = ulc.calcUList(root);
-		List<List<Integer>> UAll = ulc.calcUNodes(root, parent_sets);
+		List<U> parent_sets = ulc.calcUList(root); // List of all U in root
+		//List<List<Integer>> parent_nodes = ulc.calcUNodes(root, parent_sets); //List of all nodes in each U in root
 
-		List<Integer> total_from_children = new ArrayList<>();
-		List<Integer> parent_nodes = new ArrayList<>();
-		for (List<Integer> u : UAll) {
+		List<Integer> total_from_children = new ArrayList<>(); 
+		List<Integer> parent_nodes;
+		for (U u : parent_sets) {
+			parent_nodes = ulc.calcUNodes(root, u); //Parent nodes for each U
 //			parent_nodes = u.getNodesInU();
 
-			List<List<Integer>> children_sets;
+			List<U> children_sets;
+			List<Integer> children_nodes;
 			int weightOfU = 0; // w(u)
 			for (Bag b : neighbours) {
-//				children_sets = b.getUList();
-				children_sets = ulc.calcUNodes(b, ulc.calcUList(b));
-
+				children_sets = ulc.calcUList(b); // List of all U in child
+				
 				List<Integer> diffVal = new ArrayList<>();
-				List<Integer> children_nodes = new ArrayList<>();
 				int maxIS = 0;
-				for (List<Integer> w : children_sets) {
-//					children_nodes = w.getNodesInU();
-					maxIS = w.size();
-
+				//U currUChild;
+				for (U uc : children_sets) {
+					//currUChild = uc;
+					children_nodes = ulc.calcUNodes(b, uc); //List of all nodes in each U in child
+					maxIS = uc.getMaxWeight();
+					
 					int weight = 0;
 					for (Integer i : children_nodes) {
 						if (parent_nodes.contains(i)) {
@@ -90,13 +92,14 @@ public class RecursiveSolver {
 				}
 				int maxFromChild = Collections.max(diffVal);
 				total_from_children.add(maxFromChild);
-
-				int position = diffVal.indexOf(Collections.max(diffVal));
-				List<Integer> maxSet = children_sets.get(position);
-				returnSet.add(maxSet);
-				weightOfU = u.size(); // w(u), getSize()?
-
+				
+				int position = diffVal.indexOf(Collections.max(diffVal)); //Hope this works as we think
+				U maxSet = children_sets.get(position);
+				maxSet.setMaxWeight(maxFromChild);
+				returnSet.add(ulc.calcUNodes(b, maxSet));
 			}
+			
+			weightOfU = parent_nodes.size(); // w(u)
 			int parent_MaxIS = weightOfU;
 			for (Integer i : total_from_children) {
 				parent_MaxIS += i;

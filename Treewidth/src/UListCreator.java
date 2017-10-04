@@ -4,31 +4,40 @@ import java.util.ArrayList;
 public class UListCreator {
 	
 	private Graph g;
-	private List<String> UList;
+	//private List<String> UList;
+	private List<U> UList;
 	
 	public UListCreator(Graph g) {
 		this.g = g;
 		UList = new ArrayList<>();
 	}
 	
-	public List<String> calcUList(Bag b) {
+	public List<U> calcUList(Bag b) {
 		int bagSize = b.bagSize();
 		for (int i = 0; i < possibleCombinations(bagSize); i++) {
 			String nbr = createString(i, b);
 			String U = reverseString(nbr);
 			if (checkIndep(U, b)) {
-				UList.add(U);
+				U u = new U();
+				u.setComb(U);
+				UList.add(u);
 			}
 		}
 		return UList;
 	}
 	
-	public List<List<Integer>> calcUNodes(Bag b, List<String> calcUList) {
-		List<List<Integer>> UNodes = new ArrayList<>();
-		for (String s : calcUList) {
-			UNodes.add(b.getNodeNbr(s));
-		}
-		return UNodes;
+//	public List<List<Integer>> calcUNodes(Bag b, List<U> calcUList) {
+//		List<List<Integer>> UNodes = new ArrayList<>();
+//		for (U u : calcUList) {
+//			String s = u.getComb();
+//			UNodes.add(b.getNodeNbr(s));
+//		}
+//		return UNodes;
+//	}
+	
+	public List<Integer> calcUNodes(Bag b, U u) {
+		String s = u.getComb();
+		return b.getNodeNbr(s);
 	}
 	
 	private String createString(int i, Bag b) {
