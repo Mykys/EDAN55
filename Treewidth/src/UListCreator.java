@@ -34,8 +34,11 @@ public class UListCreator {
 	private String createString(int i, Bag b) {
 		StringBuilder sb = new StringBuilder();
 		int remainder = i;
+		int modulo = 0;
 		while (remainder > 0) {
-			sb.append(remainder % 2);
+			modulo = remainder % 2;
+			remainder = remainder / 2;
+			sb.append(modulo);
 		}
 		while (sb.toString().length() < b.bagSize()) {
 			sb.append(0);
@@ -66,11 +69,11 @@ public class UListCreator {
 
 	private String reverseString(String s) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < s.length()-1; i++) {
+		for (int i = s.length()-1; i > 0; i++) {
 			sb.append(s.charAt(i));
 			sb.append(" ");
 		}
-		sb.append(s.charAt(s.length()-1));
+		sb.append(s.charAt(0));
 		return sb.toString();
 	}
 	

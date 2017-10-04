@@ -71,14 +71,12 @@ public class Bag {
 	
 	public List<Integer> getNodeNbr(String U) {
 		List<Integer> nodes = new ArrayList<>();
-		int pos = 0;
 		char s;
 		for (int i = 0; i < U.length(); i++) {
 			s = U.charAt(i);
 			if (s == '1') {
-				nodes.add(this.nodes.get(pos));
+				nodes.add(this.nodes.get(i));
 			}
-			pos++;
 		}
 		return nodes;
 	}
