@@ -95,7 +95,6 @@ public class RecursiveSolver {
 				
 				int position = diffVal.indexOf(Collections.max(diffVal)); //Hope this works as we think
 				U maxSet = children_sets.get(position);
-				maxSet.setMaxWeight(maxFromChild);
 				returnSet.add(ulc.calcUNodes(b, maxSet));
 			}
 			
@@ -104,6 +103,9 @@ public class RecursiveSolver {
 			for (Integer i : total_from_children) {
 				parent_MaxIS += i;
 			}
+			
+			u.setMaxWeight(parent_MaxIS);
+			
 		}
 		return returnSet;
 	}
