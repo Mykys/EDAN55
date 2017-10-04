@@ -53,7 +53,8 @@ public class RecursiveSolver {
 	}
 	
 
-	private void SolveRecursive(Bag root) {
+	private List<List<Integer>> SolveRecursive(Bag root) {
+		List<List<Integer>> returnSet = new ArrayList<>();
 		List<Bag> neighbours = root.getNeighbours();
 		UListCreator ulc = new UListCreator(g);
 //		List<U> parent_sets = root.getUList();
@@ -91,6 +92,8 @@ public class RecursiveSolver {
 				total_from_children.add(maxFromChild);
 
 				int position = diffVal.indexOf(Collections.max(diffVal));
+				List<Integer> maxSet = children_sets.get(position);
+				returnSet.add(maxSet);
 				weightOfU = u.size(); // w(u), getSize()?
 
 			}
@@ -99,7 +102,7 @@ public class RecursiveSolver {
 				parent_MaxIS += i;
 			}
 		}
-
+		return returnSet;
 	}
 
 }
