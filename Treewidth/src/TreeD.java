@@ -48,6 +48,7 @@ public class TreeD {
 				if (small.isEmpty()) {
 					bagList.remove(remove);
 					adjMatrix = subTree(adjMatrix, remove);
+					removeNeighbour(remove);
 				} else {
 					for (Integer n : small) {
 						if (!large.contains(n)) {
@@ -81,5 +82,16 @@ public class TreeD {
 		}
 		return subMatrix;
 
+	}
+	
+	public void removeNeighbour(int bagNbr) {
+		for (int i = 1; i < bagList.size(); i++) {
+			Bag b = bagList.get(i);
+			List<Bag> neighbours = b.getNeighbours();
+			if (neighbours.contains(bagNbr)) {
+				neighbours.remove(bagNbr);
+			}
+		}
+		
 	}
 }
