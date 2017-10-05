@@ -38,13 +38,16 @@ public class WorseRecSolv {
 		List<List<Integer>> parentUList = UListCreator.calcUNodes(root, UListCreator.calcUList(root));
 		for (List<Integer> currU : parentUList) {
 			for (List<List<Integer>> childCurrUList : childList) {
+				//intitialize temp List<Integer>
 				for (List<Integer> childCurrU : childCurrUList) {
-					for (int node : childCurrU) {
-						if (!currU.contains(node)) {
-							currU.add(node);
+					//calc max (get f, compare childCurrU w/ currU) (save max in temp List<Integer>)
+					for (int node : childCurrU) { //change childCurrU to temp List<Integer>, also "move out"
+						if (!currU.contains(node)) { //wrong
+							currU.add(node); //left to do: add check for max
 						}
 					}
 				}
+				//move the add part over here
 			}
 		}
 		return parentUList; //this gives all nodes in each parentU, not discerning between nodes originally from parentU or childU
