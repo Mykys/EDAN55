@@ -75,7 +75,8 @@ public class Bag {
 		for (int i = 0; i < U.length(); i++) {
 			s = U.charAt(i);
 			if (s == '1') {
-				nodes.add(this.nodes.get(i));
+				int node = this.nodes.get(i);
+				nodes.add(node);
 			}
 		}
 		return nodes;

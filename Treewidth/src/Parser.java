@@ -19,20 +19,27 @@ public class Parser {
 				line = nextLine(br);
 			}
 			if (line[0].equals("p")) {
-				n = toInt(line[1]);
-				m = toInt(line[2]);
+				n = toInt(line[2]);
+				m = toInt(line[3]);
+				line = nextLine(br);
 			}
 			int tempM = 0;
 			int[][] adjMatrix = new int[n][n];
 			while (tempM < m) {
 				while (isCommentLine(line)) {
 					line = nextLine(br);
+					tempM--;
 				}
 				tempM++;
-				int i = toInt(line[1]);
-				int j = toInt(line[2]);
-				adjMatrix[i][j] = 1;
-				adjMatrix[j][i] = 1;
+				int i = toInt(line[0]);
+				int j = toInt(line[1]);
+				adjMatrix[i-1][j-1] = 1;
+				adjMatrix[j-1][i-1] = 1;
+				line = nextLine(br);
+				
+				if (line == null) {
+					break;
+				}
 			}
 			Graph g = new Graph(adjMatrix);
 			br.close();
@@ -60,9 +67,9 @@ public class Parser {
 				line = nextLine(br);
 			}
 			if (line[0].equals("s")) {
-				b = toInt(line[3]);
-				w = toInt(line[4]);
-				n = toInt(line[5]);
+				b = toInt(line[2]);
+				w = toInt(line[3]);
+				n = toInt(line[4]);
 			}
 			int tempB = 0;
 			int[][] adjMatrix = new int[b][b];
@@ -71,6 +78,7 @@ public class Parser {
 				while (isCommentLine(line)) {
 					line = nextLine(br);
 				}
+				line = nextLine(br);
 				tempB++;
 				int bagNbr = toInt(line[1]);
 				List<Integer> bagNodes = new ArrayList<>();
@@ -87,10 +95,11 @@ public class Parser {
 				}
 				int i = toInt(line[0]);
 				int j = toInt(line[1]);
-				adjMatrix[i][j] = 1;
-				adjMatrix[j][i] = 1;
+				adjMatrix[i-1][j-1] = 1;
+				adjMatrix[j-1][i-1] = 1;
 				TD.getBag(i).addNeighbour(TD.getBag(j));
 				TD.getBag(j).addNeighbour(TD.getBag(i));
+				line = nextLine(br);
 			}
 			TD.setAdjMatrix(adjMatrix);
 			br.close();
@@ -111,14 +120,30 @@ public class Parser {
 		return Integer.parseInt(string);
 	}
 
+//	private String[] nextLine(BufferedReader br) {
+//		String[] line = null;
+//		try {
+//			line = br.readLine().trim().split("\\s");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return line;
+//	}
+	
 	private String[] nextLine(BufferedReader br) {
 		String[] line = null;
+		String s = null;
 		try {
-			line = br.readLine().trim().split("\\s");
+			s = br.readLine();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if (s == null) {
+			return null;
+		}
+		line = s.trim().split("\\s");
 		return line;
 	}
 	

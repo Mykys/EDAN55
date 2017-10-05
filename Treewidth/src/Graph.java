@@ -10,5 +10,6 @@ public class Graph {
 	public int getElement(int i, int j) {
 		return adjMatrix[i][j];
 	}
+
 	
 }

@@ -60,7 +60,7 @@ public class UListCreator {
 		List<Integer> nodes = b.getNodeNbr(u);
 		for (int i : nodes) {
 			for (int j : nodes) {
-				if (g.getElement(i, j) == 1) {
+				if (g.getElement(i-1, j-1) == 1) {
 					return false;
 				}
 			}
@@ -78,9 +78,9 @@ public class UListCreator {
 
 	private String reverseString(String s) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = s.length()-1; i > 0; i++) {
+		for (int i = s.length()-1; i > 0; i--) {
 			sb.append(s.charAt(i));
-			sb.append(" ");
+			//sb.append(" ");
 		}
 		sb.append(s.charAt(0));
 		return sb.toString();

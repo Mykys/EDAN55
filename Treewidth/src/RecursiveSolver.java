@@ -11,46 +11,76 @@ public class RecursiveSolver {
 		this.g = g;
 		this.TD = TD;
 	}
-
-	public List<Integer> solvePostOrder(int rootNbr) {
-		List<Integer> solution = new ArrayList<>();
-		Bag root = TD.getBag(rootNbr);
-		solution = solveRecursive(root);
-
-		return solution;
-	}
-
-	private List<Integer> solveRecursive(Bag root) {
-		List<Bag> neighbours = root.getNeighbours();
-		for (Bag b : neighbours) {
-			if (b != root) {
-				List<Integer> locSolution = solveRecursive(b);
-			}
-			if (neighbours.size() == 1) {
-				MISSolver ms = new MISSolver();
-				int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
-				List<Integer> ignoreList = new ArrayList<Integer>();
-				List<Integer> leafSolution = ms.algRecursive(bagMatrix, ignoreList);
-				return leafSolution;
-			} else {
-				MISSolver ms = new MISSolver();
-				int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
-				List<Integer> ignoreList = new ArrayList<Integer>();
-				List<Integer> nodeSolution = ms.algRecursive(bagMatrix, ignoreList);
-			}
-
-		}
-
-		return null;
-	}
+//
+//	public List<Integer> solvePostOrder(int rootNbr) {
+//		List<Integer> solution = new ArrayList<>();
+//		Bag root = TD.getBag(rootNbr);
+//		solution = solveRecursive(root);
+//
+//		return solution;
+//	}
 	
-	private List<Integer> localSolution(Bag b) {
-		MISSolver ms = new MISSolver();
-		int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
-		List<Integer> ignoreList = new ArrayList<Integer>();
-		List<Integer> localSolution = ms.algRecursive(bagMatrix, ignoreList);
-		return localSolution;
+	public List<List<Integer>> solveRecursive(Bag root, Bag prevRoot, List<List<Integer>> MISNodes) {
+		
+		if (MISNodes.size() >= TD.treeSize()-1) { // Should the root return any nodes itself? Atm, it can return max f_t(u) only
+			return MISNodes;
+		}
+		
+		List<Bag> neighbours = root.getNeighbours();
+		
+		if (neighbours.size() == 1) {
+			UListCreator ulc = new UListCreator(g);
+			List<U> ULeaf = ulc.calcUList(root); // List of all U in leaf
+			for (U u : ULeaf) {
+				List<Integer> Unodes = ulc.calcUNodes(root, u);
+				u.setMaxWeight(Unodes.size());
+			}
+			return null; // How do I know which vertexes in leaf node should belong to MIS in G?
+		}
+		
+		for (Bag b : neighbours) {
+			if (b != root && b != prevRoot) {
+				List<List<Integer>> childSolution = solveRecursive(b, root, MISNodes);
+			}
+		}
+		
+		List<List<Integer>> childNodes = SolveRecursive(root); // List of Unodes in max of each child
+		MISNodes.addAll(childNodes);
+		return null;
+		
 	}
+
+//	private List<Integer> solveRecursive(Bag root) {
+//		List<Bag> neighbours = root.getNeighbours();
+//		for (Bag b : neighbours) {	
+//			if (b != root) {
+//				List<Integer> locSolution = solveRecursive(b);
+//			}
+//			if (neighbours.size() == 1) {
+//				MISSolver ms = new MISSolver();
+//				int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
+//				List<Integer> ignoreList = new ArrayList<Integer>();
+//				List<Integer> leafSolution = ms.algRecursive(bagMatrix, ignoreList);
+//				return leafSolution;
+//			} else {
+//				MISSolver ms = new MISSolver();
+//				int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
+//				List<Integer> ignoreList = new ArrayList<Integer>();
+//				List<Integer> nodeSolution = ms.algRecursive(bagMatrix, ignoreList);
+//			}
+//
+//		}
+//
+//		return null;
+//	}
+//	
+//	private List<Integer> localSolution(Bag b) {
+//		MISSolver ms = new MISSolver();
+//		int[][] bagMatrix = b.bagMatrix(b.getNodes(), g);
+//		List<Integer> ignoreList = new ArrayList<Integer>();
+//		List<Integer> localSolution = ms.algRecursive(bagMatrix, ignoreList);
+//		return localSolution;
+//	}
 	
 
 	private List<List<Integer>> SolveRecursive(Bag root) {
