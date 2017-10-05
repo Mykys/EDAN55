@@ -47,6 +47,7 @@ public class TreeD {
 
 				if (small.isEmpty()) {
 					bagList.remove(remove);
+					adjMatrix = subTree(adjMatrix, remove);
 				} else {
 					for (Integer n : small) {
 						if (!large.contains(n)) {
@@ -66,5 +67,19 @@ public class TreeD {
 
 	public int treeSize() {
 		return bagList.size();
+	}
+
+	private int[][] subTree(int[][] adjMatrix, int bagNbr) {
+		int size = adjMatrix.length - 1;
+		int[][] subMatrix = new int[size][size];
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				if (i != bagNbr - 1 && j != bagNbr - 1) {
+					subMatrix[i][j] = adjMatrix[i][j];
+				}
+			}
+		}
+		return subMatrix;
+
 	}
 }
