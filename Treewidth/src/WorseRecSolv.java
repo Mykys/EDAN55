@@ -72,15 +72,20 @@ public class WorseRecSolv {
 					}
 				}
 				// move the add part over here
+				List<Integer> dupCheck = new ArrayList<>();
 				for (int node : temp) { // change childCurrU to temp
 										// List<Integer>, also "move out"
-					if (!currU.contains(node) && checkIndep(currU, node) && !currU.isEmpty()) {
-						currU.add(node);
+					dupCheck.addAll(currU);
+					if (!dupCheck.contains(node) && checkIndep(dupCheck, node) && !dupCheck.isEmpty()) {
+//					if (!currU.contains(node) && checkIndep(currU, node) && !currU.isEmpty()) {
+						
+						dupCheck.add(node);
 //						List<Integer> temp2 = new ArrayList<>();
 //						temp2.add(node);
 //						parentTempList.add(temp2);
 					}
 				}
+				currU.add(node);
 			}
 //			for (int j = 0; j < parentTempList.size(); j++) {
 //				if (!parentUList.contains(parentTempList.get(j))) {
