@@ -14,7 +14,7 @@ public class WorseULC {
 	public List<String> calcUList(Bag b) {
 		int bagSize = b.bagSize();
 		List<String> UList = new ArrayList<>();
-		for (int i = 1; i < possibleCombinations(bagSize); i++) {
+		for (int i = 0; i < possibleCombinations(bagSize); i++) {
 			String nbr = createString(i, b);
 			String U = reverseString(nbr);
 			if (checkIndep(U, b)) {

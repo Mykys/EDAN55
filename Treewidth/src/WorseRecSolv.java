@@ -40,7 +40,19 @@ public class WorseRecSolv {
 		}
 		// solve for branch
 		List<List<Integer>> parentUList = UListCreator.calcUNodes(root, UListCreator.calcUList(root));
+//		List<List<Integer>> parentTempList = new ArrayList<>();
+//		int UListSize = parentUList.size();
+//		int count = 0;
+		for (List<List<Integer>> extra : childList) {
+			for (List<Integer> extra2 : extra) {
+				if (!parentUList.contains(extra2)) {
+					parentUList.add(extra2);
+				}
+			}
+		}
 		for (List<Integer> currU : parentUList) {
+//		while (count < UListSize) {
+//			List<Integer> currU = parentUList.get(count);
 			for (List<List<Integer>> childCurrUList : childList) {
 				// intitialize temp List<Integer>
 				List<Integer> temp = new ArrayList<>();
@@ -48,7 +60,13 @@ public class WorseRecSolv {
 				for (List<Integer> childCurrU : childCurrUList) {
 					// calc max (get f, compare childCurrU w/ currU) (save max
 					// in temp List<Integer>)
-					if (childCurrU.size() > max) {
+					boolean indep = true;
+					for (int node : childCurrU) {
+						if (!checkIndep(currU, node)) {
+							indep = false;
+						}
+					}
+					if (childCurrU.size() > max && indep) {
 						max = childCurrU.size();
 						temp = childCurrU;
 					}
@@ -56,11 +74,21 @@ public class WorseRecSolv {
 				// move the add part over here
 				for (int node : temp) { // change childCurrU to temp
 										// List<Integer>, also "move out"
-					if (!currU.contains(node) && checkIndep(currU, node)) {
+					if (!currU.contains(node) && checkIndep(currU, node) && !currU.isEmpty()) {
 						currU.add(node);
+//						List<Integer> temp2 = new ArrayList<>();
+//						temp2.add(node);
+//						parentTempList.add(temp2);
 					}
 				}
 			}
+//			for (int j = 0; j < parentTempList.size(); j++) {
+//				if (!parentUList.contains(parentTempList.get(j))) {
+//					parentUList.add(parentTempList.get(j));
+//				}
+//			}
+//			count++;
+//			UListSize = parentUList.size();
 		}
 		return parentUList; // this gives all nodes in each parentU, not
 							// discerning between nodes originally from parentU
@@ -70,7 +98,7 @@ public class WorseRecSolv {
 	private boolean checkIndep(List<Integer> currU, int node) {
 		boolean indep = true;
 		for (int i : currU) {
-			if(g.getElement(i-1, node-1) == 1) {
+			if (i == node || g.getElement(i - 1, node - 1) == 1) {
 				indep = false;
 			}
 		}

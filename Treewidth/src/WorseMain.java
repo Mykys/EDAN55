@@ -27,11 +27,19 @@ public class WorseMain {
 		TreeD TD = p.readTree(filenameT, g);
 		TD.modifyTree();
 		int root = TD.setRandomRoot();
+		root = 6;
 		Bag rootBag = TD.getBag(root);
 //		RecursiveSolver rs = new RecursiveSolver(g, TD);
 		WorseRecSolv wrs = new WorseRecSolv(g, TD);
 		List<List<Integer>> MISNodes = new ArrayList<>();
 		MISNodes = wrs.solvePostOrder(root);
+		print(MISNodes);
+	
+
+
+}
+
+	private static void print(List<List<Integer>> MISNodes) {
 		StringBuilder sb = new StringBuilder();
 		int max = 0;
 		List<Integer> rootMax = new ArrayList<>();
@@ -47,8 +55,5 @@ public class WorseMain {
 		}
 		System.out.println(rootMax.size());
 		System.out.println(sb.toString());
+	}		
 	}
-	
-
-
-}
