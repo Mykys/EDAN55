@@ -13,7 +13,8 @@ public class WorseULC {
 	
 	public List<String> calcUList(Bag b) {
 		int bagSize = b.bagSize();
-		for (int i = 0; i < possibleCombinations(bagSize); i++) {
+		List<String> UList = new ArrayList<>();
+		for (int i = 1; i < possibleCombinations(bagSize); i++) {
 			String nbr = createString(i, b);
 			String U = reverseString(nbr);
 			if (checkIndep(U, b)) {
@@ -51,7 +52,7 @@ public class WorseULC {
 		List<Integer> nodes = b.getNodeNbr(u);
 		for (int i : nodes) {
 			for (int j : nodes) {
-				if (g.getElement(i, j) == 1) {
+				if (g.getElement(i-1, j-1) == 1) {
 					return false;
 				}
 			}
@@ -69,9 +70,9 @@ public class WorseULC {
 
 	private String reverseString(String s) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = s.length()-1; i > 0; i++) {
+		for (int i = s.length()-1; i > 0; i--) {
 			sb.append(s.charAt(i));
-			sb.append(" ");
+//			sb.append(" ");
 		}
 		sb.append(s.charAt(0));
 		return sb.toString();
